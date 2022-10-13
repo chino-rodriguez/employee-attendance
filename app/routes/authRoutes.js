@@ -48,9 +48,6 @@ router.post('/login', passport.authenticate('local', { successRedirect: '/api/au
         if (err.message === "Bad Request" && err.name === "AuthenticationError") msg = 'Invalid credentials. Please try again.';
         return res.status(status).send({ message: msg, err }); // Error is sent to client
     }
-
-    const { username, password } = req.body;
-    console.log(username, password);
     return res.json({ redirect: '/' });
 })
 
