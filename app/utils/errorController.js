@@ -3,6 +3,7 @@ module.exports = (err, req, res, next) => {
         console.log('HIT ERROR MIDDLEWARE');
         console.log(err.name, err.message);
         if (err.code === '23505' && err.constraint === 'employee_pkey') return err = handleUserExistsError(err, res);
+        if (err.constraint === 'wage_pkey') return err = handleDuplicatePositionError(err, res);
         if (err.message === 'Username cannot be empty') return err = handleMissingUsernameError(err, res);
         if (err.message === 'Password cannot be empty') return err = handleMissingPasswordError(err, res);
         if (err.message === 'Password is not long enough') return err = handleWeakPasswordError(err, res);
@@ -34,5 +35,10 @@ const handleMissingPasswordError = (err, res) => {
 
 const handleWeakPasswordError = (err, res) => {
     const error = `Password must be at least 8 characters long.`;
+    return res.status(409).send({ message: error });
+}
+
+const handleDuplicatePositionError = (err, res) => {
+    const error = `That position already exists.`;
     return res.status(409).send({ message: error });
 }

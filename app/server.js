@@ -45,9 +45,11 @@ app.use(passport.session());
 // ---------- ROUTES AND ERROR HANDLER SETUP  ----------
 const authRoutes = require("./routes/authRoutes");
 const entryRoutes = require("./routes/entryRoutes");
+const wageRoutes = require("./routes/wageRoutes");
 const errorController = require("./utils/errorController");
 app.use("/api/auth", authRoutes);
 app.use("/api/entries", entryRoutes);
+app.use("/api/wages", wageRoutes);
 app.use(errorController);
 
 // ---------- START SERVER  ----------
