@@ -9,7 +9,7 @@ router.use(express.urlencoded({ extended: true }));
 router.use(express.json());
 
 router.post('/register', async (req, res, next) => {
-    const { firstname, lastname, username, password } = req.body;
+    const { firstName, lastName, username, password } = req.body;
 
     if (username === '') return next(new Error('Username cannot be empty'));
     if (password === '') return next(new Error('Password cannot be empty'));
@@ -22,10 +22,10 @@ router.post('/register', async (req, res, next) => {
         const hash = await bcrypt.hash(password, salt);
         const id = uuid();
 
-        const query = `INSERT INTO Employee(id, firstname, lastname, username, password) VALUES ('${id}', '${firstname}', '${lastname}', '${username}', '${hash}')`;
+        const query = `INSERT INTO Employee(id, firstname, lastname, username, password) VALUES ('${id}', '${firstName}', '${lastName}', '${username}', '${hash}')`;
         await performQuery(query);
 
-        const allUsers = await performQuery('SELECT * FROM Employee');
+        const allUsers = await performQuery('SELECT id, firstname, lastname, username FROM Employee')
         const last = allUsers.rows[allUsers.rows.length - 1];
 
         // LOGIN NEWLY REGISTERED USER
@@ -66,7 +66,15 @@ router.get('/logout', (req, res) => {
 // Redirect user to home page on login success.
 // TODO remove message, ensure redirect works
 router.get('/login-success', (req, res) => {
-    res.json({ redirect: '/', msg: "Yay you logged in", user: req.user });
+    res.json({
+        redirect: '/',
+        user: {
+            id: req.user.id,
+            firstName: req.user.firstname,
+            lastName: req.user.lastname,
+            username: req.user.username
+        }
+    });
 })
 
 // TODO you are here, integrate user login with React frontend
