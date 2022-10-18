@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import axios from 'axios';
+import { isBefore, isFuture } from 'date-fns';
 
 export default function useForm({ initialValues, slug }) {
     const [values, setValues] = useState(initialValues || {});
     const [error, setError] = useState(null);
     const [prevError, setPrevError] = useState(null);
     const [success, setSuccess] = useState(null);
+    const [prevSuccess, setPrevSuccess] = useState(null);
 
     //track form values
     const handleChange = event => {
@@ -36,51 +38,50 @@ export default function useForm({ initialValues, slug }) {
     //send data to database
     const submitData = async (formValues) => {
         const dataObject = formValues.values;
-        const { date, timeIn, timeOut, position } = dataObject;
-        if (date === '' || timeIn === '' || timeOut === '' || position === '') {
+        let { date, timeIn, timeOut, position } = dataObject;
+        timeIn.setDate(date.getDate());
+        timeOut.setDate(date.getDate());
+        try {
+            await axios({
+                method: 'POST',
+                url: `${baseUrl}/api/entries/add`,
+                data: {
+                    date,
+                    timeIn,
+                    timeOut,
+                    position
+                },
+                headers:
+                    new Headers({
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    }),
+                withCredentials: true
+
+            }).then(res => {
+                if (!prevSuccess || (success !== prevSuccess)) {
+                    setPrevSuccess(success);
+                } else {
+                    setPrevSuccess(null);
+                }
+                setSuccess(res.data.success);
+                setError(null);
+                if (res.data.redirect === '/') {
+                    window.location = '/';
+                } else if (res.data.redirect === '/login') {
+                    window.location = '/login';
+                }
+            })
+        } catch (err) {
+            console.log(err);
             if (!prevError || (error !== prevError)) {
                 setPrevError(error);
             } else {
                 setPrevError(null);
             }
-            setError('Please fill out empty fields.');
-        } else {
-            try {
-                await axios({
-                    method: 'POST',
-                    url: `${baseUrl}/api/entries/add`,
-                    data: {
-                        date,
-                        timeIn,
-                        timeOut,
-                        position
-                    },
-                    headers:
-                        new Headers({
-                            'Content-Type': 'application/json',
-                            'Accept': 'application/json'
-                        }),
-                    withCredentials: true
-
-                }).then(res => {
-                    setSuccess(res.data.success);
-                    setError(null);
-                    if (res.data.redirect === '/') {
-                        window.location = '/';
-                    } else if (res.data.redirect === '/login') {
-                        window.location = '/login';
-                    }
-                })
-            } catch (err) {
-                console.log(err);
-                if (!prevError || (error !== prevError)) {
-                    setPrevError(error);
-                } else {
-                    setPrevError(null);
-                }
-                setError(err.response.data.message);
-            }
+            setError(err.response.data.message);
         }
+        //}
 
     };
 
@@ -91,6 +92,10 @@ export default function useForm({ initialValues, slug }) {
         setValues,
         handleSubmit,
         error,
-        prevError
+        setError,
+        prevError,
+        setPrevError,
+        success,
+        prevSuccess
     }
 }

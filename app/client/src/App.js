@@ -12,6 +12,7 @@ function App() {
   const [message, setMessage] = useState(null);
   const [isFetching, setIsFetching] = useState(false);
   const [user, setUser] = useState(null);
+  const [userId, setUserId] = useState(null)
 
   const fetchUser = async () => {
     const response = await fetch(fetchUserUrl, { credentials: "include" });
@@ -22,6 +23,7 @@ function App() {
       const json = await response.json();
       setMessage(json.message);
       setUser(json.user);
+      setUserId(json.id);
       setIsFetching(false);
     } catch (e) {
       setMessage(`API call failed: ${e}`);
@@ -55,7 +57,7 @@ function App() {
           <Route
             exact
             path="/"
-            element={<HomePage user={user} />}
+            element={<HomePage user={user} userId={userId} />}
           />
 
           <Route
