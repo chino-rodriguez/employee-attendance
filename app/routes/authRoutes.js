@@ -64,7 +64,6 @@ router.get('/logout', (req, res) => {
 })
 
 // Redirect user to home page on login success.
-// TODO remove message, ensure redirect works
 router.get('/login-success', (req, res) => {
     res.json({
         redirect: '/',
@@ -77,7 +76,6 @@ router.get('/login-success', (req, res) => {
     });
 })
 
-// TODO you are here, integrate user login with React frontend
 router.get('/getUser', (req, res) => {
     const data = {
         message: "No user logged in",

@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import loginHook from '../hooks/auth';
 import {
     Typography,
@@ -32,51 +33,61 @@ export default function LoginPage() {
 
     return (
         <>
-            {/* Heading */}
-            <Typography variant="h3" gutterBottom>
-                Login
-            </Typography>
-            {/* Form fields */}
-            <Stack spacing={2} sx={{ mb: '1rem' }}>
+            <Stack
+                spacing={2}
+                direction="column"
+                alignItems="center"
+                justifyContent="center"
+                sx={{ marginTop: "5%" }}
+            >
+                {/* Heading */}
+                <Typography variant="h4">
+                    Login
+                </Typography>
+                {/* Form fields */}
+                <Stack spacing={2} sx={{ mb: '1rem' }}>
 
-                {/* Username */}
-                <FormControl>
-                    <FormLabel>Username</FormLabel>
-                    <TextField
-                        name="username"
-                        value={values.username}
-                        onChange={handleChange}
-                        onKeyDown={handleKeyDown}
-                        required >
-                    </TextField>
-                </FormControl>
+                    {/* Username */}
+                    <FormControl>
+                        <FormLabel>Username</FormLabel>
+                        <TextField
+                            name="username"
+                            value={values.username}
+                            onChange={handleChange}
+                            onKeyDown={handleKeyDown}
+                            required >
+                        </TextField>
+                    </FormControl>
 
-                {/* Password */}
-                <FormControl>
-                    <FormLabel>Password</FormLabel>
-                    <TextField
-                        name="password"
-                        type={'password'}
-                        value={values.password}
-                        onChange={handleChange}
-                        onKeyDown={handleKeyDown}
-                        required>
-                    </TextField>
-                </FormControl>
+                    {/* Password */}
+                    <FormControl>
+                        <FormLabel>Password</FormLabel>
+                        <TextField
+                            name="password"
+                            type={'password'}
+                            value={values.password}
+                            onChange={handleChange}
+                            onKeyDown={handleKeyDown}
+                            required>
+                        </TextField>
+                    </FormControl>
+                </Stack>
+
+                {/* Submit button */}
+                <Button
+                    onClick={handleSubmit}
+                    type="submit"
+                    color="primary"
+                    variant="contained"
+                    sx={{ mb: '1rem' }}
+                > Login
+                </Button>
+
+                {/* Feedback message -- error */}
+                {error && showError && <Alert severity="error" onClose={handleCloseError} sx={{ mb: '1rem' }}>{error}</Alert>}
+
+                <Typography>New user? <Link to="/register">Register</Link></Typography>
             </Stack>
-
-            {/* Submit button */}
-            <Button
-                onClick={handleSubmit}
-                type="submit"
-                color="primary"
-                variant="contained"
-                sx={{ mb: '1rem' }}
-            > Login
-            </Button>
-
-            {/* Feedback message -- error */}
-            {error && showError && <Alert severity="error" onClose={handleCloseError} sx={{ mb: '1rem' }}>{error}</Alert>}
 
         </>
 
