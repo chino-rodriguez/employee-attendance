@@ -8,7 +8,8 @@ import {
     Button,
     FormControl,
     TextField,
-    Alert
+    Alert,
+    Tooltip
 } from '@mui/material';
 
 export default function RegisterPage() {
@@ -87,17 +88,19 @@ export default function RegisterPage() {
                     </FormControl>
 
                     {/* Password */}
-                    <FormControl>
-                        <FormLabel>Password</FormLabel>
-                        <TextField
-                            name="password"
-                            type={'password'}
-                            value={values.password}
-                            onChange={handleChange}
-                            onKeyDown={handleKeyDown}
-                            required>
-                        </TextField>
-                    </FormControl>
+                    <Tooltip title="Password must be at least 8 characters long." arrow>
+                        <FormControl>
+                            <FormLabel>Password</FormLabel>
+                            <TextField
+                                name="password"
+                                type={'password'}
+                                value={values.password}
+                                onChange={handleChange}
+                                onKeyDown={handleKeyDown}
+                                required>
+                            </TextField>
+                        </FormControl>
+                    </Tooltip>
                 </Stack>
 
                 {/* Submit button */}
@@ -113,7 +116,9 @@ export default function RegisterPage() {
                 {/* Feedback message -- error */}
                 {error && showError && <Alert severity="error" onClose={handleCloseError} sx={{ mb: '1rem' }}>{error}</Alert>}
 
+                {/* Link to login page */}
                 <Typography>Already have an account? <Link to="/login">Login</Link></Typography>
+
             </Stack>
         </>
 
