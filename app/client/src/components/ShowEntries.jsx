@@ -1,13 +1,17 @@
 import { useState, useEffect } from 'react';
 import {
+    Paper,
     Stack,
     Typography,
     Alert,
+    TableContainer,
     Table,
     TableHead,
     TableBody,
+    TableFooter,
     TableRow,
-    TableCell
+    TableCell,
+    TablePagination
 }
     from '@mui/material';
 
@@ -46,6 +50,19 @@ export default function ShowEntries(props) {
         if (error) setShowError(true);
     }, [error]);
 
+    // Pagination config
+    const [page, setPage] = useState(0);
+    const [rowsPerPage, setRowsPerPage] = useState(5);
+
+    const handleChangePage = (event, value) => {
+        setPage(value);
+    }
+
+    const handleRowsPerPageChange = (event) => {
+        setRowsPerPage(parseInt(event.target.value, 10));
+        setPage(0);
+    }
+
     return (
         <>
             <Stack
@@ -61,56 +78,80 @@ export default function ShowEntries(props) {
                 {/* Table showing entries TODO limit number of rows, paginate */}
                 {
                     entries &&
-                    <Table>
-                        <TableHead>
-                            <TableRow>
-                                <TableCell>
-                                    Date
-                                </TableCell>
-                                <TableCell>
-                                    Time In
-                                </TableCell>
-                                <TableCell>
-                                    Time Out
-                                </TableCell>
-                                <TableCell>
-                                    Hours
-                                </TableCell>
-                                <TableCell>
-                                    Position
-                                </TableCell>
-                                <TableCell>
-                                    Salary
-                                </TableCell>
-                            </TableRow>
-                        </TableHead>
+                    <TableContainer component={Paper}>
+                        <Table stickyHeader>
 
-                        <TableBody>
-                            {entries.map((entry) => (
-                                <TableRow key={entry.id} >
-                                    <TableCell>
-                                        {entry.date}
+                            {/* Heading */}
+                            <TableHead >
+                                <TableRow >
+                                    <TableCell sx={{ fontWeight: "700" }}>
+                                        Date
                                     </TableCell>
-                                    <TableCell>
-                                        {entry.timeIn}
+                                    <TableCell sx={{ fontWeight: "700" }}>
+                                        Time In
                                     </TableCell>
-                                    <TableCell>
-                                        {entry.timeOut}
+                                    <TableCell sx={{ fontWeight: "700" }}>
+                                        Time Out
                                     </TableCell>
-                                    <TableCell>
-                                        {entry.hours}
+                                    <TableCell sx={{ fontWeight: "700" }}>
+                                        Hours
                                     </TableCell>
-                                    <TableCell>
-                                        {entry.position}
+                                    <TableCell sx={{ fontWeight: "700" }}>
+                                        Position
                                     </TableCell>
-                                    <TableCell>
-                                        {entry.salary}
+                                    <TableCell sx={{ fontWeight: "700" }}>
+                                        Salary
                                     </TableCell>
                                 </TableRow>
-                            ))}
-                        </TableBody>
+                            </TableHead>
 
-                    </Table>
+                            {/* Body including entries */}
+                            <TableBody>
+                                {(rowsPerPage > 0
+                                    ? entries.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                                    : entries
+                                ).map((entry) => (
+                                    <TableRow key={entry.id} >
+                                        <TableCell>
+                                            {entry.date}
+                                        </TableCell>
+                                        <TableCell>
+                                            {entry.timeIn}
+                                        </TableCell>
+                                        <TableCell>
+                                            {entry.timeOut}
+                                        </TableCell>
+                                        <TableCell>
+                                            {entry.hours}
+                                        </TableCell>
+                                        <TableCell>
+                                            {entry.position}
+                                        </TableCell>
+                                        <TableCell>
+                                            {entry.salary}
+                                        </TableCell>
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+
+                            {/* Footer with pagination options */}
+                            <TableFooter>
+                                <TableRow>
+                                    {/* <TableCell colspan={2}></TableCell> */}
+                                    <TablePagination
+                                        rowsPerPageOptions={[5, 10, 20]}
+                                        colSpan={6}
+                                        count={entries.length}
+                                        rowsPerPage={rowsPerPage}
+                                        page={page}
+                                        onPageChange={handleChangePage}
+                                        onRowsPerPageChange={handleRowsPerPageChange}
+                                    />
+                                </TableRow>
+                            </TableFooter>
+
+                        </Table>
+                    </TableContainer>
                 }
 
 
