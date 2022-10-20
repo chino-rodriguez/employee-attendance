@@ -18,6 +18,7 @@ import ConfirmAddDialog from './ConfirmAddDialog';
 
 export default function AddEntryForm(props) {
 
+    // Form validation function
     const validateInputs = (values, positions) => {
         const { date, timeIn, timeOut, position } = values;
 
@@ -49,6 +50,7 @@ export default function AddEntryForm(props) {
         return true;
     }
 
+    // Populate positions state variable (used for Dropdown options)
     const [positions, setPositions] = useState(null);
     useEffect(() => {
         setPositions(props.positions);
@@ -208,6 +210,7 @@ export default function AddEntryForm(props) {
             > Add
             </Button>
 
+            {/* Popup that appears when "Add" button is clicked. Prompts the user to confirm the add operation */}
             <ConfirmAddDialog open={open} setOpen={setOpen} values={values} handleSubmit={handleSubmit} resetValues={resetValues} />
 
             {/* Feedback messages */}

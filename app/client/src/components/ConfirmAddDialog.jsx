@@ -18,10 +18,13 @@ export default function ConfirmAddDialog(props) {
 
     return (
         <Dialog open={props.open}>
+
+            {/* Title */}
             <DialogTitle>
                 Confirm add entry
             </DialogTitle>
 
+            {/* Confirm message */}
             {values &&
                 <DialogContent>
                     Are you sure you want to add this entry?
@@ -31,15 +34,17 @@ export default function ConfirmAddDialog(props) {
                 </DialogContent>
             }
 
-
-
+            {/* Two buttons: Back and Add Entry */}
             <DialogActions>
+
+                {/* Back button */}
                 <Button
                     onClick={() => { props.setOpen(false) }}
                 >
                     Back
                 </Button>
 
+                {/* Confirm button */}
                 <Button
                     variant="contained"
                     sx={{ backgroundColor: "green" }}

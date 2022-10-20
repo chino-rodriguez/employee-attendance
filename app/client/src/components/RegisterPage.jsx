@@ -13,6 +13,8 @@ import {
 } from '@mui/material';
 
 export default function RegisterPage() {
+
+    // Hook to control form
     const { values, handleChange, handleSubmit, handleKeyDown, error, prevError } = registerHook({
         initialValues: {
             firstName: '',
@@ -116,7 +118,7 @@ export default function RegisterPage() {
                 {/* Feedback message -- error */}
                 {error && showError && <Alert severity="error" onClose={handleCloseError} sx={{ mb: '1rem' }}>{error}</Alert>}
 
-                {/* Link to login page */}
+                {/* Link to Login page */}
                 <Typography>Already have an account? <Link to="/login">Login</Link></Typography>
 
             </Stack>
