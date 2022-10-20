@@ -31,12 +31,11 @@ router.post('/register', async (req, res, next) => {
         // LOGIN NEWLY REGISTERED USER
         req.login(last, (err, user) => {
             if (err) return next(err);
-            let response = { redirect: "/", user: last }; // TODO: make sure this redirects to home / AddEntry page
+            let response = { redirect: "/", user: last };
             return res.json(response);
         })
 
     } catch (err) {
-        console.log('Error in Register route');
         return next(err);
     }
 })
@@ -57,7 +56,6 @@ router.get('/logout', (req, res) => {
         req.logout((err, next) => {
             if (err) return next(err);
         });
-        console.log(`Logged out user ${username}`);
         return res.send({ message: `Logged out user ${username}` });
     }
     return res.send({ redirect: '/login' });

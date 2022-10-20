@@ -2,8 +2,6 @@ const express = require('express');
 const cors = require('cors');
 const session = require('express-session');
 const passport = require('passport');
-const { v4: uuid } = require('uuid');
-const { performQuery } = require('./utils/dbModule');
 
 // ---------- EXPRESS SERVER SETUP ----------
 const app = express();

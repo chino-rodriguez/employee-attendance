@@ -47,10 +47,10 @@ router.post('/add', isLoggedIn, async (req, res, next) => {
 
         const query = `INSERT INTO Entry (id, employeeid, date, timein, timeout, hours, position, salary)
             VALUES ('${id}', '${userId}', '${date}', '${timeIn}', '${timeOut}', ${hours}, '${position}', ${salary})`;
-        //console.log(query);
         await performQuery(query);
 
         const entry = await performQuery(`SELECT * FROM Entry WHERE id = '${id}'`);
+
         if (entry.rows.length === 1) {
             response.success = `Successfully added entry from ${formatTime(timeInDate)} to ${formatTime(timeOutDate)} on ${formatDateSlashes(timeOutDate)}.`;
         } else return next(new Error('Entry was not added, please try again.'));

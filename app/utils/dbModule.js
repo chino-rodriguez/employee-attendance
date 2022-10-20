@@ -11,11 +11,6 @@ const dbConfig = {
     database: process.env.DBNAME
 }
 const pool = new Pool(dbConfig);
-console.log(dbConfig);
-
-pool.on('connect', () => {
-    console.log('Database connected');
-});
 
 pool.on('error', (e) => {
     console.log(e, e.stack, e.message);

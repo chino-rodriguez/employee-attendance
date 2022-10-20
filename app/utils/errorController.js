@@ -1,7 +1,5 @@
 module.exports = (err, req, res, next) => {
     try {
-        console.log('HIT ERROR MIDDLEWARE');
-        console.log(err.name, err.message);
         if (err.code === '23505' && err.constraint === 'employee_pkey') return err = handleUserExistsError(err, res);
         if (err.constraint === 'wage_pkey') return err = handleDuplicatePositionError(err, res);
         if (err.message === 'Username cannot be empty') return err = handleMissingUsernameError(err, res);

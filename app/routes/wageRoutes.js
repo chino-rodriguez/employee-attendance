@@ -23,7 +23,6 @@ router.post('/add', async (req, res, next) => {
 
 router.get('/all', async (req, res) => {
     const wages = await performQuery('SELECT * FROM Wage');
-    console.log(wages.rows);
     let positions = [];
     for (let row of wages.rows) {
         positions.push(row.position);

@@ -7,15 +7,13 @@ const verifyPassword = async (password, hash) => {
     let result = false;
     try {
         const res = await bcrypt.compare(password, hash);
-        console.log(`Correct password: ${res}`);
         result = res;
     } catch (e) {
-        console.log(`Error at bcrypt.compare: ${e}`);
     }
     return result;
 }
 
-const verifyCallback = async (req, username, password, done) => {
+const verifyCallback = async (username, password, done) => {
 
     try {
         const query = `SELECT * FROM Employee WHERE username = '${username}'`;
@@ -28,8 +26,6 @@ const verifyCallback = async (req, username, password, done) => {
         }
 
         const hash = user.password;
-        //console.log(user);
-        //console.log(hash);
 
         const isValid = await verifyPassword(password, hash);
         if (isValid) {
@@ -40,12 +36,11 @@ const verifyCallback = async (req, username, password, done) => {
         }
 
     } catch (e) {
-        console.log('Something went wrong in test', e);
         return done(e);
     }
 }
 
-const strategy = new LocalStrategy({ passReqToCallback: true }, verifyCallback);
+const strategy = new LocalStrategy({ passReqToCallback: false }, verifyCallback);
 
 passport.use(strategy);
 
@@ -62,15 +57,3 @@ passport.deserializeUser(async (userId, done) => {
         done(e);
     }
 })
-
-// ---- DEBUGGING verifyCallback() ----
-
-const print = (msg) => {
-    console.log(msg);
-}
-
-const test = async () => {
-    verifyCallback('username', 'password', print);
-}
-
-//test();
