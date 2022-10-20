@@ -15,7 +15,8 @@ const calcHours = (timeIn, timeOut) => {
     let frac = Math.abs(minuteDifference) / 60;
 
     // Round minutes to closest quarter hour
-    if ((0 <= frac) && (frac <= 0.25)) {
+    if (frac === 0) {
+    } else if ((0 < frac) && (frac <= 0.25)) {
         frac = 0.25;
     } else if ((0.25 < frac) && (frac <= 0.5)) {
         frac = 0.5;
