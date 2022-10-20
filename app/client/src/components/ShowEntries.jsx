@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import {
+    Button,
     Paper,
     Stack,
     Typography,
@@ -73,11 +74,11 @@ export default function ShowEntries(props) {
             >
 
                 {/* Heading */}
-                <Typography variant="h5">My Entries</Typography>
+                {/* <Typography variant="h5">My Shifts</Typography> */}
 
-                {/* Table showing entries TODO limit number of rows, paginate */}
+                {/* Table showing entries*/}
                 {
-                    entries &&
+                    entries && entries.length > 0 &&
                     <TableContainer component={Paper}>
                         <Table stickyHeader>
 
@@ -152,6 +153,19 @@ export default function ShowEntries(props) {
 
                         </Table>
                     </TableContainer>
+                }
+
+                {
+                    entries && entries.length === 0 &&
+                    <Stack direction="column" spacing={1} justifyContent="center" alignItems="center">
+                        <span>You have not logged any entries. </span>
+                        <Button
+                            onClick={() => {
+                                props.setShowEntries(false);
+                            }}
+                            size="small"
+                        >Add an entry</Button>
+                    </Stack>
                 }
 
 

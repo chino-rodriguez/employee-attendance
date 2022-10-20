@@ -89,7 +89,7 @@ function HomePage(props) {
                     </ButtonGroup>
 
                     {/* Main content: AddEntry or ShowEntries, depending on state variable */}
-                    {showEntries ? <ShowEntries user={user} userId={userId} /> : <AddEntryForm user={user} positions={positions} />}
+                    {showEntries ? <ShowEntries user={user} userId={userId} setShowEntries={setShowEntries} /> : <AddEntryForm user={user} positions={positions} />}
 
                 </Stack>
             </>
