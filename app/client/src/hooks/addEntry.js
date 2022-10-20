@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import axios from 'axios';
-import { isBefore, isFuture } from 'date-fns';
 
-export default function useForm({ initialValues, slug }) {
+export default function useForm({ initialValues }) {
     const [values, setValues] = useState(initialValues || {});
     const [error, setError] = useState(null);
     const [prevError, setPrevError] = useState(null);
