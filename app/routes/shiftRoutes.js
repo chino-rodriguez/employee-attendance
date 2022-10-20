@@ -95,6 +95,29 @@ router.get('/byUser', async (req, res, next) => {
 
     res.send({ shifts })
 
-})
+});
+
+router.delete('/', isLoggedIn, async (req, res, next) => {
+    const { id, userId } = req.body;
+    const response = {};
+
+    try {
+        const shift = await performQuery(`SELECT * FROM Shift WHERE id = '${id}'`);
+        if (shift.rows.length !== 1) return next(new Error('Invalid Shift id.'));
+        if (shift.rows[0].employeeid !== userId) return next(new Error('You do not have permission to do that.'));
+
+        await performQuery(`DELETE FROM Shift WHERE id = '${id}'`);
+
+        const count = await performQuery(`SELECT count(id) FROM Shift WHERE employeeid = '${userId}'`);
+        response.count = count.rows[0].count;
+
+        const deleted = shift.rows[0];
+        response.success = `Successfully deleted shift on ${deleted.date} from ${deleted.timein} to ${deleted.timeout}`
+    } catch (err) {
+        return next(err);
+    }
+
+    res.send(response);
+});
 
 module.exports = router;

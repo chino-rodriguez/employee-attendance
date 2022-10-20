@@ -12,13 +12,42 @@ import {
     TableFooter,
     TableRow,
     TableCell,
-    TablePagination
+    TablePagination,
+    IconButton
 }
     from '@mui/material';
+import { DoDisturbOnOutlined } from '@mui/icons-material';
+import deleteShift from '../hooks/deleteShift';
+import ConfirmDeleteDialog from './ConfirmDeleteDialog';
 
 export default function ShowShifts(props) {
     const [shifts, setShifts] = useState(null);
-    const [error, setError] = useState(null);
+    const [editing, setEditing] = useState(false);
+
+    const [open, setOpen] = useState(false);
+    const [shiftToDelete, setShiftToDelete] = useState(null);
+
+    // Hook to control delete operation
+    const { values, setValues, handleSubmit, error, setError, prevError, success, prevSuccess, count } = deleteShift({
+        initialValues: {
+            id: '',
+            userId: ''
+        }
+    });
+
+    const handleOpenDialog = (shift) => {
+        values.id = shift.id;
+        values.userId = props.userId;
+        setShiftToDelete(shift);
+        setOpen(true);
+    }
+
+    const handleCloseDialog = () => {
+        values.id = '';
+        values.userId = '';
+        setShiftToDelete(null);
+        setOpen(false);
+    }
 
     // Fetch entries by current user from the database
     const fetchShifts = async () => {
@@ -37,14 +66,19 @@ export default function ShowShifts(props) {
 
     // Fetch shifts every time props changes
     useEffect(() => {
+        if (count === 0) setEditing(false);
         fetchShifts();
-    }, [props])
+    }, [props, count])
 
     // Setup to display feedback messages
     const [showError, setShowError] = useState(false);
+    const [showSuccess, setShowSuccess] = useState(false);
 
     const handleCloseError = () => {
         setShowError(false);
+    }
+    const handleCloseSuccess = () => {
+        setShowSuccess(false);
     }
 
     useEffect(() => {
@@ -76,6 +110,15 @@ export default function ShowShifts(props) {
                 {/* Heading */}
                 {/* <Typography variant="h5">My Shifts</Typography> */}
 
+                <Button
+                    onClick={() => {
+                        setEditing(!editing);
+                    }}
+                    variant="contained"
+                >
+                    {editing ? "Back" : "Edit"}
+                </Button>
+
                 {/* Table showing entries*/}
                 {
                     shifts && shifts.length > 0 &&
@@ -103,6 +146,13 @@ export default function ShowShifts(props) {
                                     <TableCell sx={{ fontWeight: "700" }}>
                                         Salary
                                     </TableCell>
+
+                                    {/* Filer cell */}
+                                    {
+                                        editing ?
+                                            <TableCell></TableCell>
+                                            : null
+                                    }
                                 </TableRow>
                             </TableHead>
 
@@ -131,6 +181,20 @@ export default function ShowShifts(props) {
                                         <TableCell>
                                             {shift.salary}
                                         </TableCell>
+                                        {
+                                            editing
+                                                ? <TableCell>
+                                                    <Button
+                                                        sx={{ color: "red" }}
+                                                        onClick={() => {
+                                                            handleOpenDialog(shift);
+                                                        }}
+                                                    >
+                                                        <DoDisturbOnOutlined />
+                                                    </Button>
+                                                </TableCell>
+                                                : null
+                                        }
                                     </TableRow>
                                 ))}
                             </TableBody>
@@ -170,7 +234,10 @@ export default function ShowShifts(props) {
 
                 {/* Feedback messages */}
                 {error && showError && <Alert severity="error" onClose={handleCloseError} sx={{ mb: '1rem' }}>{error}</Alert>}
+                {success && showSuccess && <Alert severity="success" onClose={handleCloseSuccess} sx={{ mb: '1rem' }}>{success}</Alert>}
             </Stack>
+
+            <ConfirmDeleteDialog open={open} setOpen={setOpen} shift={shiftToDelete} onClose={handleCloseDialog} handleSubmit={handleSubmit} />
         </>
     )
 }
