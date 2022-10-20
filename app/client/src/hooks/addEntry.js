@@ -66,6 +66,7 @@ export default function useForm({ initialValues, slug }) {
                 }
                 setSuccess(res.data.success);
                 setError(null);
+
                 if (res.data.redirect === '/') {
                     window.location = '/';
                 } else if (res.data.redirect === '/login') {
@@ -73,7 +74,6 @@ export default function useForm({ initialValues, slug }) {
                 }
             })
         } catch (err) {
-            console.log(err);
             if (!prevError || (error !== prevError)) {
                 setPrevError(error);
             } else {
@@ -81,7 +81,6 @@ export default function useForm({ initialValues, slug }) {
             }
             setError(err.response.data.message);
         }
-        //}
 
     };
 
