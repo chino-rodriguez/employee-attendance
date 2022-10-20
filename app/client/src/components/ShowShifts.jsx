@@ -16,28 +16,28 @@ import {
 }
     from '@mui/material';
 
-export default function ShowEntries(props) {
-    const [entries, setEntries] = useState(null);
+export default function ShowShifts(props) {
+    const [shifts, setShifts] = useState(null);
     const [error, setError] = useState(null);
 
     // Fetch entries by current user from the database
-    const fetchEntries = async () => {
+    const fetchShifts = async () => {
         const baseUrl = process.env.REACT_APP_HOME_URL || "http://localhost:5000";
-        const response = await fetch(`${baseUrl}/api/entries/byUser?id=${props.userId}`);
+        const response = await fetch(`${baseUrl}/api/shifts/byUser?id=${props.userId}`);
         if (!response.ok) {
             throw new Error(response.message);
         }
         try {
             const json = await response.json();
-            setEntries(json.entries);
+            setShifts(json.shifts);
         } catch (e) {
             setError(e.message);
         }
     }
 
-    // Fetch entries every time props changes
+    // Fetch shifts every time props changes
     useEffect(() => {
-        fetchEntries();
+        fetchShifts();
     }, [props])
 
     // Setup to display feedback messages
@@ -78,7 +78,7 @@ export default function ShowEntries(props) {
 
                 {/* Table showing entries*/}
                 {
-                    entries && entries.length > 0 &&
+                    shifts && shifts.length > 0 &&
                     <TableContainer component={Paper}>
                         <Table stickyHeader>
 
@@ -106,30 +106,30 @@ export default function ShowEntries(props) {
                                 </TableRow>
                             </TableHead>
 
-                            {/* Body including entries */}
+                            {/* Body including shifts */}
                             <TableBody>
                                 {(rowsPerPage > 0
-                                    ? entries.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                                    : entries
-                                ).map((entry) => (
-                                    <TableRow key={entry.id} >
+                                    ? shifts.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                                    : shifts
+                                ).map((shift) => (
+                                    <TableRow key={shift.id} >
                                         <TableCell>
-                                            {entry.date}
+                                            {shift.date}
                                         </TableCell>
                                         <TableCell>
-                                            {entry.timeIn}
+                                            {shift.timeIn}
                                         </TableCell>
                                         <TableCell>
-                                            {entry.timeOut}
+                                            {shift.timeOut}
                                         </TableCell>
                                         <TableCell>
-                                            {entry.hours}
+                                            {shift.hours}
                                         </TableCell>
                                         <TableCell>
-                                            {entry.position}
+                                            {shift.position}
                                         </TableCell>
                                         <TableCell>
-                                            {entry.salary}
+                                            {shift.salary}
                                         </TableCell>
                                     </TableRow>
                                 ))}
@@ -138,11 +138,10 @@ export default function ShowEntries(props) {
                             {/* Footer with pagination options */}
                             <TableFooter>
                                 <TableRow>
-                                    {/* <TableCell colspan={2}></TableCell> */}
                                     <TablePagination
                                         rowsPerPageOptions={[5, 10, 20]}
                                         colSpan={6}
-                                        count={entries.length}
+                                        count={shifts.length}
                                         rowsPerPage={rowsPerPage}
                                         page={page}
                                         onPageChange={handleChangePage}
@@ -156,15 +155,15 @@ export default function ShowEntries(props) {
                 }
 
                 {
-                    entries && entries.length === 0 &&
+                    shifts && shifts.length === 0 &&
                     <Stack direction="column" spacing={1} justifyContent="center" alignItems="center">
-                        <span>You have not logged any entries. </span>
+                        <span>You have not logged any shifts. </span>
                         <Button
                             onClick={() => {
-                                props.setShowEntries(false);
+                                props.setShowShifts(false);
                             }}
                             size="small"
-                        >Add an entry</Button>
+                        >Add a shift</Button>
                     </Stack>
                 }
 

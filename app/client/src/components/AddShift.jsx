@@ -12,11 +12,11 @@ import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { isBefore, isFuture } from 'date-fns';
-import addEntry from '../hooks/addEntry';
+import addShift from '../hooks/addShift';
 import Dropdown from './Dropdown';
 import ConfirmAddDialog from './ConfirmAddDialog';
 
-export default function AddEntryForm(props) {
+export default function AddShift(props) {
 
     // Form validation function
     const validateInputs = (values, positions) => {
@@ -41,7 +41,7 @@ export default function AddEntryForm(props) {
             setError("Time Out must be later than Time In.");
             return false;
         } else if (isFuture(date)) {
-            setError("Cannot add an entry for a future date.");
+            setError("Cannot add a shift for a future date.");
             return false;
         } else if (positions.indexOf(position) === -1) {
             setError("Invalid position.");
@@ -59,8 +59,8 @@ export default function AddEntryForm(props) {
     // Confirm add dialog
     const [open, setOpen] = useState(false);
 
-    // Add Entry hook
-    let { values, setValues, handleChange, handleKeyDown, handleSubmit, error, setError, prevError, setPrevError, success, prevSuccess } = addEntry({
+    // Add Shift hook
+    let { values, setValues, handleChange, handleKeyDown, handleSubmit, error, setError, prevError, setPrevError, success, prevSuccess } = addShift({
         initialValues: {
             date: null,
             timeIn: null,
@@ -106,7 +106,7 @@ export default function AddEntryForm(props) {
         >
 
             {/* Heading */}
-            <Typography variant="h5">Add Entry</Typography>
+            {/* <Typography variant="h5">Add Shift</Typography> */}
 
             {/* Form */}
             <Stack spacing={2} sx={{ mb: '1rem' }}>

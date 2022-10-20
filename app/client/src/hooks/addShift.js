@@ -43,7 +43,7 @@ export default function useForm({ initialValues }) {
         try {
             await axios({
                 method: 'POST',
-                url: `${baseUrl}/api/entries/add`,
+                url: `${baseUrl}/api/shifts/add`,
                 data: {
                     date,
                     timeIn,

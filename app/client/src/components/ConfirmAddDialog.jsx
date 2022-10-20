@@ -21,20 +21,20 @@ export default function ConfirmAddDialog(props) {
 
             {/* Title */}
             <DialogTitle>
-                Confirm add entry
+                Confirm add shift
             </DialogTitle>
 
             {/* Confirm message */}
             {values &&
                 <DialogContent>
-                    Are you sure you want to add this entry?
+                    Are you sure you want to add this shift?
                     <p><strong>Date: </strong>{formatDateSlashes(values.date)}</p>
                     <p><strong>Time: </strong> {formatTime(values.timeIn)} to {formatTime(values.timeOut)}</p>
                     <p><strong>Position: </strong>{values.position}</p>
                 </DialogContent>
             }
 
-            {/* Two buttons: Back and Add Entry */}
+            {/* Two buttons: Back and Add Shift */}
             <DialogActions>
 
                 {/* Back button */}
@@ -54,7 +54,7 @@ export default function ConfirmAddDialog(props) {
                         props.resetValues();
                     }}
                 >
-                    Add entry
+                    Add shift
                 </Button>
             </DialogActions>
         </Dialog>

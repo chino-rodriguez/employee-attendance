@@ -21,8 +21,9 @@
 --SELECT * FROM Wage;
 
 -- DROP TABLE Entry;
+-- DROP TABLE Shift;
 
--- CREATE TABLE IF NOT EXISTS Entry (
+-- CREATE TABLE IF NOT EXISTS Shift (
 --     id UUID UNIQUE,
 --     employeeid UUID NOT NULL,
 --         CONSTRAINT fk_employeeid
@@ -39,4 +40,4 @@
 --     salary decimal 
 -- );
 
--- SELECT * FROM Entry;
+-- SELECT * FROM Shift;

@@ -46,18 +46,18 @@ router.post('/add', isLoggedIn, async (req, res, next) => {
         let hours = calcHours(timeInDate, timeOutDate);
         let salary = (hours * wage).toFixed(2);
 
-        const query = `INSERT INTO Entry (id, employeeid, date, timein, timeout, hours, position, salary)
+        const query = `INSERT INTO Shift (id, employeeid, date, timein, timeout, hours, position, salary)
             VALUES ('${id}', '${userId}', '${date}', '${timeIn}', '${timeOut}', ${hours}, '${position}', ${salary})`;
         await performQuery(query);
 
-        const entry = await performQuery(`SELECT * FROM Entry WHERE id = '${id}'`);
+        const shift = await performQuery(`SELECT * FROM Shift WHERE id = '${id}'`);
 
-        if (entry.rows.length === 1) {
-            response.success = `Successfully added entry from ${formatTime(timeInDate)} to ${formatTime(timeOutDate)} on ${formatDateSlashes(timeOutDate)}.`;
-        } else return next(new Error('Entry was not added, please try again.'));
+        if (shift.rows.length === 1) {
+            response.success = `Successfully added shift from ${formatTime(timeInDate)} to ${formatTime(timeOutDate)} on ${formatDateSlashes(timeOutDate)}.`;
+        } else return next(new Error('Shift was not added, please try again.'));
 
-        const all = await performQuery(`SELECT * FROM Entry`);
-        response.entries = all.rows;
+        const all = await performQuery(`SELECT * FROM Shift`);
+        response.shifts = all.rows;
     } catch (err) {
         return next(err);
     }
@@ -76,24 +76,24 @@ router.get('/byUser', async (req, res, next) => {
     const user = await performQuery(verifyUserId);
     if (user.rows.length !== 1) throw new Error("Invalid user id");
 
-    const query = `SELECT * FROM Entry WHERE employeeId = '${id}' ORDER BY date, timeout`;
+    const query = `SELECT * FROM Shift WHERE employeeId = '${id}' ORDER BY date, timeout`;
     const all = await performQuery(query);
 
-    const entries = [];
-    for (let entry of all.rows) {
+    const shifts = [];
+    for (let shift of all.rows) {
         const obj = {
-            id: entry.id,
-            date: formatDateSlashes(entry.date),
-            timeIn: formatTime(entry.timein),
-            timeOut: formatTime(entry.timeout),
-            hours: entry.hours,
-            position: entry.position,
-            salary: entry.salary
+            id: shift.id,
+            date: formatDateSlashes(shift.date),
+            timeIn: formatTime(shift.timein),
+            timeOut: formatTime(shift.timeout),
+            hours: shift.hours,
+            position: shift.position,
+            salary: shift.salary
         }
-        entries.push(obj);
+        shifts.push(obj);
     }
 
-    res.send({ entries })
+    res.send({ shifts })
 
 })
 

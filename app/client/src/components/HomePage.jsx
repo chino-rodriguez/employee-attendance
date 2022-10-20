@@ -1,14 +1,14 @@
 import { useState, useEffect } from 'react';
 import { Button, Stack, ButtonGroup } from '@mui/material';
-import AddEntryForm from './AddEntryForm';
-import ShowEntries from './ShowEntries';
+import AddShift from './AddShift';
+import ShowShifts from './ShowShifts';
 import LoginPage from './LoginPage';
 
 function HomePage(props) {
     const [user, setUser] = useState(props.user);
     const [userId, setUserId] = useState(props.userId);
     const [positions, setPositions] = useState(null);
-    const [showEntries, setShowEntries] = useState(false);
+    const [showShifts, setShowShifts] = useState(false);
 
     useEffect(() => {
         setUser(props.user);
@@ -72,24 +72,24 @@ function HomePage(props) {
                     <ButtonGroup aria-label="primary button group">
                         <Button
                             onClick={() => {
-                                setShowEntries(false);
+                                setShowShifts(false);
                             }}
-                            variant={showEntries ? "outlined" : "contained"}
+                            variant={showShifts ? "outlined" : "contained"}
                         >
-                            Add Entry
+                            Add Shift
                         </Button>
 
                         <Button
                             onClick={() => {
-                                setShowEntries(true);
+                                setShowShifts(true);
                             }}
-                            variant={showEntries ? "contained" : "outlined"}
+                            variant={showShifts ? "contained" : "outlined"}
                         >
-                            My Entries</Button>
+                            My shifts</Button>
                     </ButtonGroup>
 
-                    {/* Main content: AddEntry or ShowEntries, depending on state variable */}
-                    {showEntries ? <ShowEntries user={user} userId={userId} setShowEntries={setShowEntries} /> : <AddEntryForm user={user} positions={positions} />}
+                    {/* Main content: AddShift or ShowEntries, depending on state variable */}
+                    {showShifts ? <ShowShifts user={user} userId={userId} setShowShifts={setShowShifts} /> : <AddShift user={user} positions={positions} />}
 
                 </Stack>
             </>
