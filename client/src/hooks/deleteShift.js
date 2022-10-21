@@ -27,10 +27,6 @@ export default function useForm({ initialValues }) {
                     id,
                     userId
                 },
-                headers:
-                    new Headers({
-                        'Accept': 'application/json'
-                    }),
                 withCredentials: true
 
             }).then(res => {
