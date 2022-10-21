@@ -38,15 +38,15 @@ const sessionConfig = {
 };
 
 if (process.env.NODE_ENV === "production") {
-    // const { pool } = require('./dbModule')
-    // const store = new pgSession({
-    //     pool,
-    //     createTableIfMissing: true,
-    //     pruneSessionInterval: false
-    // });
+    const { pool } = require('./dbModule')
+    const store = new pgSession({
+        pool,
+        createTableIfMissing: true,
+        pruneSessionInterval: false
+    });
     app.set('trust proxy', 1); // trust first proxy
     sessionConfig.cookie.secure = true; // serve secure cookies
-    //sessionConfig.store = store; // use Postgres for Session storage
+    sessionConfig.store = store; // use Postgres for Session storage
 }
 app.use(session(sessionConfig));
 
