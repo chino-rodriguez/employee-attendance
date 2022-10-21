@@ -29,7 +29,6 @@ export default function useForm({ initialValues }) {
                 },
                 headers:
                     new Headers({
-                        'Content-Type': 'application/json',
                         'Accept': 'application/json'
                     }),
                 withCredentials: true
