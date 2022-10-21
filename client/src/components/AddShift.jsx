@@ -11,7 +11,7 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { isBefore, isFuture } from 'date-fns';
+import { isBefore, isEqual, isFuture } from 'date-fns';
 import addShift from '../hooks/addShift';
 import Dropdown from './Dropdown';
 import ConfirmAddDialog from './ConfirmAddDialog';
@@ -37,7 +37,7 @@ export default function AddShift(props) {
         if (!date || !timeIn || !timeOut || position === '') {
             setError("Please fill out empty fields.");
             return false;
-        } else if (isBefore(timeOut, timeIn)) {
+        } else if (isBefore(timeOut, timeIn) || isEqual(timeOut, timeIn)) {
             setError("Time Out must be later than Time In.");
             return false;
         } else if (isFuture(date)) {

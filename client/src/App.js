@@ -6,8 +6,8 @@ import LoginPage from "./components/LoginPage";
 import { useEffect, useState } from "react";
 
 function App() {
-  const baseUrl = process.env.REACT_APP_HOME_URL || "http://localhost:5000";
-  const fetchUserUrl = `${baseUrl}/api/auth/getUser`;
+  //const baseUrl = process.env.REACT_APP_HOME_URL || "http://localhost:5000";
+  //const fetchUserUrl = '/api/auth/getUser';
 
   const [message, setMessage] = useState(null);
   const [isFetching, setIsFetching] = useState(false);
@@ -15,7 +15,7 @@ function App() {
   const [userId, setUserId] = useState(null)
 
   const fetchUser = async () => {
-    const response = await fetch(fetchUserUrl, { credentials: "include" });
+    const response = await fetch('/api/auth/getUser', { credentials: "include" });
     if (!response.ok) {
       throw new Error(`status ${response.status}`);
     }

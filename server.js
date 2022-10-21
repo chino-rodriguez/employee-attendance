@@ -12,12 +12,13 @@ app.use(express.json());
 
 // ---------- CORS SETUP ----------
 const homeUrl = process.env.REACT_APP_HOME_URL || "http://localhost:3000";
-const whitelist = [homeUrl, "http://localhost:3000", "http://localhost:5000"];
+const whitelist = [homeUrl, "http://localhost:3000", "http://localhost:5000/"];
 const corsConfig = {
     origin: function (origin, callback) {
         if (whitelist.indexOf(origin) !== -1 || !origin) {
             callback(null, true);
         } else {
+            console.log(origin);
             callback(new Error("Not allowed by CORS"));
         }
     },
@@ -36,10 +37,11 @@ const sessionConfig = {
     },
 };
 
-if (process.env.NODE_ENV === 'production') {
+if (process.env.NODE_ENV === "production") {
     console.log('ur on prod');
+    const { pool } = require('./dbModule')
     const store = new pgSession({
-        conString: process.env.DB_URL,
+        pool,
         createTableIfMissing: true
     });
     app.set('trust proxy', 1); // trust first proxy
@@ -64,14 +66,15 @@ app.use("/api/wages", wageRoutes);
 const errorController = require("./utils/errorController");
 app.use(errorController);
 
-// ---------- SERVE index.html TO DISPLAY UI ON PROD  ----------
+// ---------- SERVE BUILD FOLDER TO DISPLAY UI ON PROD  ----------
 if (process.env.NODE_ENV === "production") {
     app.use(express.static(path.join(__dirname, "/client/build")));
-
-    app.get("*", (req, res) => {
-        res.sendFile(path.join(__dirname, "/client/build/index.html"));
-    });
 }
+
+// ---------- CATCH-ALL ROUTE TO ALWAYS DISPLAY index.html  ----------
+app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "/client/build/index.html"));
+});
 
 // ---------- START SERVER  ----------
 const port = process.env.PORT || 5000;

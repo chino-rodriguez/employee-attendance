@@ -13,8 +13,13 @@
     "pg": "^8.8.0",
     "uuid": "^9.0.0"
   },
+  "engines": {
+    "node": "16.15.1",
+    "npm": "8.11.0"
+  },
   "scripts": {
     "server": "nodemon server.js",
-    "simProd": "$env:NODE_ENV='production' && nodemon server.js"
+    "heroku-postbuild": "cd client && npm install && npm run build",
+    "start": "node server.js"
   }
 }

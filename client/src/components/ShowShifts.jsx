@@ -13,7 +13,6 @@ import {
     TableRow,
     TableCell,
     TablePagination,
-    IconButton
 }
     from '@mui/material';
 import { DoDisturbOnOutlined } from '@mui/icons-material';
@@ -28,7 +27,7 @@ export default function ShowShifts(props) {
     const [shiftToDelete, setShiftToDelete] = useState(null);
 
     // Hook to control delete operation
-    const { values, setValues, handleSubmit, error, setError, prevError, success, prevSuccess, count } = deleteShift({
+    const { values, handleSubmit, error, setError, success, count } = deleteShift({
         initialValues: {
             id: '',
             userId: ''
@@ -51,8 +50,8 @@ export default function ShowShifts(props) {
 
     // Fetch entries by current user from the database
     const fetchShifts = async () => {
-        const baseUrl = process.env.REACT_APP_HOME_URL || "http://localhost:5000";
-        const response = await fetch(`${baseUrl}/api/shifts/byUser?id=${props.userId}`);
+        // const baseUrl = process.env.REACT_APP_HOME_URL || "http://localhost:5000";
+        const response = await fetch(`/api/shifts/byUser?id=${props.userId}`);
         if (!response.ok) {
             throw new Error(response.message);
         }
@@ -110,14 +109,16 @@ export default function ShowShifts(props) {
                 {/* Heading */}
                 {/* <Typography variant="h5">My Shifts</Typography> */}
 
-                <Button
-                    onClick={() => {
-                        setEditing(!editing);
-                    }}
-                    variant="contained"
-                >
-                    {editing ? "Back" : "Edit"}
-                </Button>
+                {shifts && shifts.length > 0 &&
+                    <Button
+                        onClick={() => {
+                            setEditing(!editing);
+                        }}
+                        variant="contained"
+                    >
+                        {editing ? "Back" : "Edit"}
+                    </Button>
+                }
 
                 {/* Table showing entries*/}
                 {
