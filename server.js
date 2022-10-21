@@ -41,7 +41,8 @@ if (process.env.NODE_ENV === "production") {
     const { pool } = require('./dbModule')
     const store = new pgSession({
         pool,
-        createTableIfMissing: true
+        createTableIfMissing: true,
+        pruneSessionInterval: false
     });
     app.set('trust proxy', 1); // trust first proxy
     sessionConfig.cookie.secure = true; // serve secure cookies
