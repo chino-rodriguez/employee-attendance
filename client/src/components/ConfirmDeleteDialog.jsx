@@ -15,11 +15,11 @@ export default function ConfirmDeleteDialog(props) {
     }, [props]);
 
     return (
-        <Dialog open={props.open}>
+        <Dialog open={props.open} >
 
             {/* Title */}
             <DialogTitle>
-                Confirm delete shift
+                Delete Shift
             </DialogTitle>
 
             {/* Confirm message */}
@@ -32,7 +32,7 @@ export default function ConfirmDeleteDialog(props) {
                 </DialogContent>
             }
 
-            {/* Two buttons: Back and Delete Shift */}
+            {/* Two buttons: Back and Delete */}
             <DialogActions>
 
                 {/* Back button */}
@@ -51,7 +51,7 @@ export default function ConfirmDeleteDialog(props) {
                         props.onClose();
                     }}
                 >
-                    Delete shift
+                    Delete
                 </Button>
             </DialogActions>
         </Dialog>

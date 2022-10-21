@@ -18,7 +18,6 @@ function HomePage(props) {
     // Logout function that sends a logout API request
     const handleLogout = async (e) => {
         e.preventDefault();
-        //const baseUrl = process.env.REACT_APP_HOME_URL || 'http://localhost:5000';
         const res = await fetch('/api/auth/logout', { credentials: "include" });
         if (res.ok) {
             window.location = '/';
@@ -26,8 +25,6 @@ function HomePage(props) {
     }
 
     // Fetch positions
-    //const baseUrl = process.env.REACT_APP_HOME_URL || "http://localhost:5000";
-
     const fetchPositions = async () => {
         const response = await fetch('/api/wages/all', { credentials: "include" });
         if (!response.ok) {

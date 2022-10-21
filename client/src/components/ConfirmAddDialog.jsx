@@ -21,7 +21,7 @@ export default function ConfirmAddDialog(props) {
 
             {/* Title */}
             <DialogTitle>
-                Confirm add shift
+                Add Shift
             </DialogTitle>
 
             {/* Confirm message */}
@@ -34,7 +34,7 @@ export default function ConfirmAddDialog(props) {
                 </DialogContent>
             }
 
-            {/* Two buttons: Back and Add Shift */}
+            {/* Two buttons: Back and Add */}
             <DialogActions>
 
                 {/* Back button */}
@@ -54,7 +54,7 @@ export default function ConfirmAddDialog(props) {
                         props.resetValues();
                     }}
                 >
-                    Add shift
+                    Add
                 </Button>
             </DialogActions>
         </Dialog>

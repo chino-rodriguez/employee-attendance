@@ -6,9 +6,6 @@ import LoginPage from "./components/LoginPage";
 import { useEffect, useState } from "react";
 
 function App() {
-  //const baseUrl = process.env.REACT_APP_HOME_URL || "http://localhost:5000";
-  //const fetchUserUrl = '/api/auth/getUser';
-
   const [message, setMessage] = useState(null);
   const [isFetching, setIsFetching] = useState(false);
   const [user, setUser] = useState(null);

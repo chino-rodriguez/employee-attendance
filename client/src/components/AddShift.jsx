@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import {
-    Typography,
     Stack,
     Button,
     FormControl,
@@ -105,11 +104,13 @@ export default function AddShift(props) {
             justifyContent="center"
         >
 
-            {/* Heading */}
-            {/* <Typography variant="h5">Add Shift</Typography> */}
-
             {/* Form */}
-            <Stack spacing={2} sx={{ mb: '1rem' }}>
+            <Stack
+                spacing={2} sx={{ mb: '1rem' }}
+                direction="column"
+                alignItems="center"
+                justifyContent="center"
+            >
 
                 {/* Date and time pickers */}
                 <LocalizationProvider dateAdapter={AdapterDateFns}>
@@ -179,7 +180,7 @@ export default function AddShift(props) {
                 {/* Position */}
                 {
                     positions &&
-                    <FormControl>
+                    <FormControl fullWidth>
                         <Dropdown
                             name="position"
                             value={values.position}
@@ -192,31 +193,32 @@ export default function AddShift(props) {
                     </FormControl>
                 }
 
+                {/* Submit button */}
+                <Button
+                    onClick={() => {
+                        if (validateInputs(values, positions)) {
+                            setOpen(true);
+                            handleCloseError();
+                        }
+                        handleCloseSuccess();
+                    }}
+                    type="submit"
+                    color="primary"
+                    variant="contained"
+                > Add
+                </Button>
+
             </Stack>
 
-            {/* Submit button */}
-            <Button
-                onClick={() => {
-                    if (validateInputs(values, positions)) {
-                        setOpen(true);
-                        handleCloseError();
-                    }
-                    handleCloseSuccess();
-                }}
-                type="submit"
-                color="primary"
-                variant="contained"
-                sx={{ mb: '1rem' }}
-            > Add
-            </Button>
-
-            {/* Popup that appears when "Add" button is clicked. Prompts the user to confirm the add operation */}
-            <ConfirmAddDialog open={open} setOpen={setOpen} values={values} handleSubmit={handleSubmit} resetValues={resetValues} />
 
             {/* Feedback messages */}
             {error && showError && <Alert severity="error" onClose={handleCloseError} sx={{ mb: '1rem' }}>{error}</Alert>}
             {success && showSuccess && <Alert severity="success" onClose={handleCloseSuccess} sx={{ mb: '1rem' }}>{success}</Alert>}
         </Stack>
+
+
+        {/* Popup that appears when "Add" button is clicked. Prompts the user to confirm the add operation */}
+        <ConfirmAddDialog open={open} setOpen={setOpen} values={values} handleSubmit={handleSubmit} resetValues={resetValues} />
     </>
 
 }

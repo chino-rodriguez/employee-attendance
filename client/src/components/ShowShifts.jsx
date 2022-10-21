@@ -3,7 +3,6 @@ import {
     Button,
     Paper,
     Stack,
-    Typography,
     Alert,
     TableContainer,
     Table,
@@ -48,9 +47,8 @@ export default function ShowShifts(props) {
         setOpen(false);
     }
 
-    // Fetch entries by current user from the database
+    // Fetch current user's shifts from the database
     const fetchShifts = async () => {
-        // const baseUrl = process.env.REACT_APP_HOME_URL || "http://localhost:5000";
         const response = await fetch(`/api/shifts/byUser?id=${props.userId}`);
         if (!response.ok) {
             throw new Error(response.message);
@@ -106,15 +104,12 @@ export default function ShowShifts(props) {
                 justifyContent="center"
             >
 
-                {/* Heading */}
-                {/* <Typography variant="h5">My Shifts</Typography> */}
-
                 {shifts && shifts.length > 0 &&
                     <Button
                         onClick={() => {
                             setEditing(!editing);
                         }}
-                        variant="contained"
+                        variant="outlined"
                     >
                         {editing ? "Back" : "Edit"}
                     </Button>
