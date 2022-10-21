@@ -47,23 +47,14 @@ function HomePage(props) {
             <>
                 <Stack spacing={2} direction="column" justifyContent="center" alignItems="center">
 
-
-                    {/* TODO Fix the way this stack is organized; ideally push Logout button to the right while heading is centered */}
-                    <Stack spacing={3} direction="row" justifyContent="center" alignItems="center">
-
-                        {/* Page heading */}
-                        <h1>Employee Attendance</h1>
-
-                        {/* Logout button */}
-                        <Button
-                            onClick={handleLogout}
-                            size="small"
-                            variant="outlined"
-                        >
-                            Logout | {user}
-                        </Button>
-
-                    </Stack>
+                    {/* Logout button */}
+                    <Button
+                        onClick={handleLogout}
+                        size="small"
+                        variant="outlined"
+                    >
+                        Logout | {user}
+                    </Button>
 
                     {/* Button group to toggle between Add / Show */}
                     <ButtonGroup aria-label="primary button group">
@@ -85,7 +76,7 @@ function HomePage(props) {
                             My shifts</Button>
                     </ButtonGroup>
 
-                    {/* Main content: AddShift or ShowEntries, depending on state variable */}
+                    {/* Main content: AddShift or ShowShifts, depending on state variable */}
                     {showShifts ? <ShowShifts user={user} userId={userId} setShowShifts={setShowShifts} /> : <AddShift user={user} positions={positions} />}
 
                 </Stack>

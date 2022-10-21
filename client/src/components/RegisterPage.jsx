@@ -43,10 +43,9 @@ export default function RegisterPage() {
                 direction="column"
                 alignItems="center"
                 justifyContent="center"
-                sx={{ marginTop: "5%" }}
             >
                 {/* Heading */}
-                <Typography variant="h4">
+                <Typography variant="h5">
                     Register
                 </Typography>
 

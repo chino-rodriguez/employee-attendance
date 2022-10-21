@@ -38,10 +38,9 @@ export default function LoginPage() {
                 direction="column"
                 alignItems="center"
                 justifyContent="center"
-                sx={{ marginTop: "5%" }}
             >
                 {/* Heading */}
-                <Typography variant="h4">
+                <Typography variant="h5">
                     Login
                 </Typography>
                 {/* Form fields */}

@@ -115,10 +115,13 @@ export default function ShowShifts(props) {
                     </Button>
                 }
 
-                {/* Table showing entries*/}
+                {/* Table showing shifts*/}
                 {
                     shifts && shifts.length > 0 &&
-                    <TableContainer component={Paper}>
+                    <TableContainer
+                        component={Paper}
+                        sx={{ maxWidth: "100vw" }}
+                    >
                         <Table stickyHeader>
 
                             {/* Heading */}
@@ -182,11 +185,14 @@ export default function ShowShifts(props) {
                                                 ? <TableCell>
                                                     <Button
                                                         sx={{ color: "red" }}
+                                                        size="small"
                                                         onClick={() => {
                                                             handleOpenDialog(shift);
                                                         }}
                                                     >
-                                                        <DoDisturbOnOutlined />
+                                                        <DoDisturbOnOutlined
+                                                            sx={{ fontSize: "18px" }}
+                                                        />
                                                     </Button>
                                                 </TableCell>
                                                 : null

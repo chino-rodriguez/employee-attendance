@@ -28,7 +28,7 @@ function App() {
     }
   }
 
-  const debugText = (
+  const apiAndEnvStatus = (
     <div>
       <p>
         {"« "}
@@ -50,6 +50,9 @@ function App() {
   return (
     <Router>
       <div className="App">
+
+        <h1>Employee Attendance</h1>
+
         <Routes>
           <Route
             exact
@@ -69,7 +72,6 @@ function App() {
             element={<RegisterPage />}
           />
         </Routes>
-        {debugText}
       </div>
     </Router>
   );
