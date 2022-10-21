@@ -1,7 +1,9 @@
 const express = require('express');
 const cors = require('cors');
 const session = require('express-session');
+const pgSession = require('connect-pg-simple')(session);
 const passport = require('passport');
+const path = require('path');
 
 // ---------- EXPRESS SERVER SETUP ----------
 const app = express();
@@ -9,7 +11,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 // ---------- CORS SETUP ----------
-const homeUrl = process.env.HOMEPAGE_URL || "http://localhost:3000";
+const homeUrl = process.env.REACT_APP_HOME_URL || "http://localhost:3000";
 const whitelist = [homeUrl, "http://localhost:3000", "http://localhost:5000"];
 const corsConfig = {
     origin: function (origin, callback) {
@@ -33,6 +35,17 @@ const sessionConfig = {
         maxAge: 1000 * 60 * 60 * 24, // 1 day
     },
 };
+
+if (process.env.NODE_ENV === 'production') {
+    console.log('ur on prod');
+    const store = new pgSession({
+        conString: process.env.DB_URL,
+        createTableIfMissing: true
+    });
+    app.set('trust proxy', 1); // trust first proxy
+    sessionConfig.cookie.secure = true; // serve secure cookies
+    sessionConfig.store = store; // use Postgres for Session storage
+}
 app.use(session(sessionConfig));
 
 // ---------- PASSPORT (AUTH) SETUP ----------
@@ -51,8 +64,16 @@ app.use("/api/wages", wageRoutes);
 const errorController = require("./utils/errorController");
 app.use(errorController);
 
-// ---------- START SERVER  ----------
+// ---------- SERVE index.html TO DISPLAY UI ON PROD  ----------
+if (process.env.NODE_ENV === "production") {
+    app.use(express.static(path.join(__dirname, "/client/build")));
 
+    app.get("*", (req, res) => {
+        res.sendFile(path.join(__dirname, "/client/build/index.html"));
+    });
+}
+
+// ---------- START SERVER  ----------
 const port = process.env.PORT || 5000;
 
 app.listen(port, (req, res) => {
