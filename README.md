@@ -35,7 +35,7 @@ Try it <a href="https://employee-attendance-pao.herokuapp.com/">here</a>.
 <h2> Limitations </h2>
 <ul>
 <li>
-Users cannot perform any operations on Positions. This can only be done by directly connecting to the database.
+Users cannot perform any operations on Positions / Wages. This can only be done by directly connecting to the database.
 </li>
 </ul>
 
