@@ -32,3 +32,10 @@ Try it <a href="https://employee-attendance-pao.herokuapp.com/">here</a>.
 <img src="https://user-images.githubusercontent.com/106716130/200062424-25476fef-c20e-48ae-89bf-d02090d4fe8c.gif" />
 </details>
 
+<h2> Limitations </h2>
+<ul>
+<li>
+Users cannot perform any operations on Positions. This can only be done by directly connecting to the database.
+</li>
+</ul>
+
