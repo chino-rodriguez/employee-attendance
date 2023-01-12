@@ -14,6 +14,7 @@ const prodConfig = {
     user: process.env.DB_USER,
     password: process.env.DB_PASS,
     database: process.env.DB_NAME,
+    connectionTimeoutMillis: 30000
 };
 
 const pool = new Pool(
@@ -21,6 +22,7 @@ const pool = new Pool(
 );
 
 pool.on('error', (e) => {
+    console.log('Pool connection error');
     console.log(e, e.stack, e.message);
 });
 
