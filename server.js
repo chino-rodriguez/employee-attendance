@@ -39,7 +39,7 @@ const sessionConfig = {
 };
 
 if (process.env.NODE_ENV === "production") {
-    const { pool } = require('./dbModule')
+    const { pool } = require('./utils/dbModule')
     const store = new pgSession({
         pool,
         createTableIfMissing: true,

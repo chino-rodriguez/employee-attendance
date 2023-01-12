@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { performQuery } = require('../dbModule');
+const { performQuery } = require('../utils/dbModule');
 const { v4: uuid } = require('uuid');
 const { isLoggedIn } = require('../utils/middleware');
 const { differenceInMinutes } = require('date-fns');

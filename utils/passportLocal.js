@@ -1,7 +1,7 @@
 const passport = require('passport');
 const bcrypt = require('bcrypt');
 const LocalStrategy = require('passport-local').Strategy;
-const { performQuery } = require('../dbModule');
+const { performQuery } = require('./dbModule');
 
 const verifyPassword = async (password, hash) => {
     let result = false;

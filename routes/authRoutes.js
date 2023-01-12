@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
 const passport = require('passport');
-const { performQuery } = require('../dbModule');
+const { performQuery } = require('../utils/dbModule');
 const { v4: uuid } = require('uuid');
 
 router.use(express.urlencoded({ extended: true }));
