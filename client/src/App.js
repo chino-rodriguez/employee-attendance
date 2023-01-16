@@ -5,6 +5,8 @@ import RegisterPage from "./components/RegisterPage";
 import LoginPage from "./components/LoginPage";
 import { useEffect, useState } from "react";
 
+const basename = document.querySelector('base')?.getAttribute('href') ?? '/';
+
 function App() {
   const [message, setMessage] = useState(null);
   const [isFetching, setIsFetching] = useState(false);
@@ -48,7 +50,7 @@ function App() {
   }, []);
 
   return (
-    <Router>
+    <Router basename={basename}>
       <div className="App">
 
         <h1>Employee Attendance</h1>
