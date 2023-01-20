@@ -21,20 +21,22 @@ const prodConfig = {
 //     process.env.NODE_ENV === "production" ? prodConfig : devConfig
 // );
 
+//  No config needed when using Postgres' built-in environment variables
 const pool = new Pool()
 
-pool.on('error', (e) => {
-    console.log('Pool connection error');
-    console.log(e, e.stack, e.message);
-});
 
 // DEBUG database connection
-pool.on('connect', (res) => {
-    console.log('Connected to database');
-    if (process.env.NODE_ENV === "production") {
-        console.log(prodConfig);
-    } else console.log(devConfig);
-})
+// pool.on('error', (e) => {
+//     console.log('Pool connection error');
+//     console.log(e, e.stack, e.message);
+// });
+
+// pool.on('connect', (res) => {
+//     console.log('Connected to database');
+//     if (process.env.NODE_ENV === "production") {
+//         console.log(prodConfig);
+//     } else console.log(devConfig);
+// })
 
 module.exports = {
     performQuery: (text) => {

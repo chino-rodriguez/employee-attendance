@@ -34,7 +34,7 @@ function HomePage(props) {
             const json = await response.json();
             setPositions(json.positions);
         } catch (e) {
-            console.log(`API call failed: ${e}`);
+            throw new Error("API call failed");
         }
     }
 

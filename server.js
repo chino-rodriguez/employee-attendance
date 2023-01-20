@@ -18,7 +18,6 @@ const corsConfig = {
         if (whitelist.indexOf(origin) !== -1 || !origin) {
             callback(null, true);
         } else {
-            console.log(origin);
             callback(new Error("Not allowed by CORS"));
         }
     },
@@ -81,6 +80,6 @@ app.get("*", (req, res) => {
 const port = process.env.PORT || 5000;
 
 app.listen(port, (req, res) => {
-    console.log(`Listening on port ${port}`);
+    //console.log(`Listening on port ${port}`);
 });
 
