@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { MenuItem, TextField } from "@mui/material";
 
 // Returns a <select> element to be used in a form as a dropdown
