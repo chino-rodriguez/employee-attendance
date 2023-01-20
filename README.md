@@ -3,7 +3,7 @@ A simple CRUD application for employees at a workplace to log shifts and view an
 
 Developed and maintained by Chino Rodriguez with the help of Paolo Rodriguez.
 
-Try it <a href="https://employee-attendance-374422.uw.r.appspot.com/">here</a>.
+Try it <a href="https://employee-attendance-374422.uw.r.appspot.com/">here</a> with the username "test" and password "Testing123".
 
 <h2> Preview </h2>
 <img src="https://user-images.githubusercontent.com/106716130/200063076-860c5eba-5cb2-47df-9753-e23be459c05b.png" />
