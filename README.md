@@ -3,7 +3,7 @@ A simple CRUD application for employees at a workplace to log shifts and view an
 
 Developed and maintained by Chino Rodriguez with the help of Paolo Rodriguez.
 
-Try it <a href="https://employee-attendance-374422.uw.r.appspot.com/">here</a> with the username "test" and password "Testing123". Note that you must be on https for the application to work. Non-secure cookies will not be sent to the server.
+This application is not currently live as a cost-cutting measure. Please view the demo GIFs below and check out <a href="https://github.com/chino-rodriguez/MyFitnessCal">MyFitnessCal</a> for more of my work.
 
 <h2> Preview </h2>
 <img src="https://user-images.githubusercontent.com/106716130/200063076-860c5eba-5cb2-47df-9753-e23be459c05b.png" />
